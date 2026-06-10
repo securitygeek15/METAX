@@ -1,0 +1,14 @@
+[project]
+name = "METAX"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "argparse>=1.4.0",
+    "exifread>=3.5.1",
+    "mutagen>=1.47.0",
+    "pillow>=12.1.0",
+    "pypdf2>=3.0.1",
+    "python-magic>=0.4.27",
+]
