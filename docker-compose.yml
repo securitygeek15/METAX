@@ -1,0 +1,17 @@
+services:
+  metax:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: metax:latest
+    container_name: metax-forensics
+    restart: unless-stopped
+    ports:
+      - "8765:8765"
+    environment:
+      - HOST=0.0.0.0
+      - PORT=8765
+    volumes:
+      # Optional volume to mount external evidence into the container
+      - ./evidence:/app/evidence:ro
+
