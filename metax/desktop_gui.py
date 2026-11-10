@@ -75,7 +75,7 @@ class MetaXDesktopApp:
         logo = tk.Label(brand_frame, text="[ MX ]", font=("Consolas", 11, "bold"), bg=COLOR_TEXT_PRIMARY, fg=COLOR_VOID, padx=6, pady=2)
         logo.pack(side="left", padx=(0, 10))
 
-        title = tk.Label(brand_frame, text="META // X", font=("Consolas", 13, "bold"), bg=COLOR_VOID, fg=COLOR_TEXT_PRIMARY)
+        title = tk.Label(brand_frame, text="METAX", font=("Consolas", 13, "bold"), bg=COLOR_VOID, fg=COLOR_TEXT_PRIMARY)
         title.pack(side="left")
 
         subtitle = tk.Label(brand_frame, text="  FORENSIC ARTIFACT EXPLORER", font=("Consolas", 9), bg=COLOR_VOID, fg=COLOR_TEXT_MUTED)
