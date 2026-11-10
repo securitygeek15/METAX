@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>METAX — Minimalist Forensic Metadata Analyzer</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+  <!-- Top Header -->
+  <header>
+    <div class="container header-content">
+      <a href="/" class="brand">
+        <div class="brand-symbol">MX</div>
+        <div class="brand-text">META // X</div>
+        <span class="brand-version">v0.2.0</span>
+      </a>
+
+      <div class="header-actions">
+        <div class="status-pill">
+          <span class="status-dot"></span>
+          <span>ENGINE ACTIVE</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Workspace -->
+  <main class="container">
+    
+    <!-- Hero / Headline -->
+    <section class="hero-section">
+      <div class="hero-subtitle">Digital Forensics & Metadata Analysis</div>
+      <h1 class="hero-title">Forensic Artifact Extraction</h1>
+      <p style="color: var(--text-muted); font-size: 13px; max-width: 580px; margin: 0 auto;">
+        Inspect camera hardware signatures, geolocation, generative AI footprints, and temporal anomalies with a surgical monochrome interface.
+      </p>
+
+      <!-- Quick Samples -->
+      <div class="samples-strip">
+        <span class="sample-label">TEST SAMPLES:</span>
+        <button class="sample-btn" data-sample="test.jpg">test.jpg (GPS + Win11)</button>
+        <button class="sample-btn" data-sample="test.pdf">test.pdf (PDF + Timeline)</button>
+        <button class="sample-btn" data-sample="test.mp3">test.mp3 (Audio + ID3)</button>
+      </div>
+    </section>
+
+    <!-- File Dropzone -->
+    <section>
+      <div class="dropzone-card" id="dropzone">
+        <input type="file" id="file-input" accept="image/*,.pdf,audio/*,video/*">
+        <div class="dropzone-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="17 8 12 3 7 8"></polyline>
+            <line x1="12" y1="3" x2="12" y2="15"></line>
+          </svg>
+        </div>
+        <div class="dropzone-title">Drop Evidence File Here Or Click To Select</div>
+        <div class="dropzone-desc">Files are analyzed locally in-memory — no third-party telemetry.</div>
+        <div class="dropzone-tags">
+          <span class="tag-badge">JPG / JPEG</span>
+          <span class="tag-badge">PNG</span>
+          <span class="tag-badge">WEBP</span>
+          <span class="tag-badge">PDF</span>
+          <span class="tag-badge">MP3 / WAV</span>
+          <span class="tag-badge">MP4 / MOV</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Scanning Radar Animation -->
+    <div class="loading-indicator" id="loading-spinner">
+      <div class="scan-radar"></div>
+      <div class="loading-text">DECONSTRUCTING ARTIFACT METADATA...</div>
+    </div>
+
+    <!-- Forensic Report Container -->
+    <section id="report-container">
+
+      <!-- Verdict Banner -->
+      <div class="verdict-banner">
+        <div class="verdict-main">
+          <div class="verdict-tag">Forensic Assessment Verdict</div>
+          <div class="verdict-title">
+            <span id="verdict-text">AUTHENTIC CAMERA ORIGINAL</span>
+            <span class="verdict-pill" id="verdict-badge">AUTHENTIC</span>
+          </div>
+          <div class="verdict-indicators" id="verdict-indicators-container">
+            <!-- Dynamic badges inserted here -->
+          </div>
+        </div>
+
+        <div class="score-display">
+          <div class="score-number" id="integrity-score">95</div>
+          <div class="score-label">Integrity Index</div>
+          <div class="score-bar-track">
+            <div class="score-bar-fill" id="score-bar-fill" style="width: 95%;"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Two-Column Layout -->
+      <div class="report-grid">
+
+        <!-- Left Column: File Summary & Hashes -->
+        <aside>
+          <div class="panel">
+            <div class="panel-header">
+              <div class="panel-title">Artifact Preview</div>
+              <span class="tag-badge" id="file-type-badge">IMAGE</span>
+            </div>
+
+            <!-- Preview Box -->
+            <div class="preview-box" id="preview-box">
+              <div class="preview-placeholder" id="preview-placeholder">NO PREVIEW</div>
+              <img id="preview-img" src="" alt="Artifact Preview" style="display: none;">
+            </div>
+
+            <!-- File Properties List -->
+            <div class="file-attr-list">
+              <div class="file-attr-item">
+                <span class="file-attr-label">FILENAME</span>
+                <span class="file-attr-val" id="file-name">-</span>
+              </div>
+              <div class="file-attr-item">
+                <span class="file-attr-label">FILE SIZE</span>
+                <span class="file-attr-val" id="file-size">-</span>
+              </div>
+              <div class="file-attr-item" id="dimensions-row">
+                <span class="file-attr-label">DIMENSIONS</span>
+                <span class="file-attr-val" id="file-dimensions">-</span>
+              </div>
+              <div class="file-attr-item" id="duration-row" style="display: none;">
+                <span class="file-attr-label">DURATION</span>
+                <span class="file-attr-val" id="file-duration">-</span>
+              </div>
+            </div>
+
+            <!-- Cryptographic Hashes -->
+            <div class="panel-header" style="margin-top: 20px;">
+              <div class="panel-title">Cryptographic Hashes</div>
+            </div>
+
+            <div class="hash-block">
+              <div class="hash-label-row">
+                <span class="hash-type">SHA-256</span>
+                <button class="copy-btn" data-copy-target="hash-sha256">COPY</button>
+              </div>
+              <div class="hash-value" id="hash-sha256">-</div>
+            </div>
+
+            <div class="hash-block">
+              <div class="hash-label-row">
+                <span class="hash-type">SHA-1</span>
+                <button class="copy-btn" data-copy-target="hash-sha1">COPY</button>
+              </div>
+              <div class="hash-value" id="hash-sha1">-</div>
+            </div>
+
+            <div class="hash-block">
+              <div class="hash-label-row">
+                <span class="hash-type">MD5</span>
+                <button class="copy-btn" data-copy-target="hash-md5">COPY</button>
+              </div>
+              <div class="hash-value" id="hash-md5">-</div>
+            </div>
+
+            <!-- Privacy Sanitizer Button -->
+            <div style="margin-top: 20px;">
+              <button class="btn" id="strip-metadata-btn" style="width: 100%; justify-content: center;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                </svg>
+                Strip & Download Clean
+              </button>
+            </div>
+          </div>
+        </aside>
+
+        <!-- Right Column: GPS, Timeline, Searchable Metadata Explorer -->
+        <section>
+
+          <!-- Geolocation Card -->
+          <div class="gps-card" id="gps-section" style="display: none;">
+            <div class="gps-header">
+              <div>
+                <div class="panel-title">GPS Geolocation Detected</div>
+                <div class="gps-coords-large" id="gps-coords-display">0.000000, 0.000000</div>
+                <div class="gps-dms" id="gps-dms-display">-</div>
+              </div>
+              <div class="gps-links">
+                <a href="#" target="_blank" class="gps-link-btn" id="osm-link">OpenStreetMap</a>
+                <a href="#" target="_blank" class="gps-link-btn" id="gmaps-link">Google Maps</a>
+              </div>
+            </div>
+
+            <div class="map-container" id="map-container">
+              <iframe id="map-iframe" src="" loading="lazy"></iframe>
+            </div>
+          </div>
+
+          <!-- Forensic Timeline & Anomalies -->
+          <div class="timeline-card">
+            <div class="panel-header">
+              <div class="panel-title">Temporal Analysis & Timestamp Integrity</div>
+              <span class="tag-badge" id="timeline-status-badge">CONSISTENT</span>
+            </div>
+
+            <div class="timeline-list">
+              <div class="timeline-item" id="item-orig-date">
+                <div class="timeline-title">Camera / Capture Time</div>
+                <div class="timeline-date" id="date-orig">-</div>
+                <div class="timeline-note">Original timestamp recorded by hardware/software.</div>
+              </div>
+
+              <div class="timeline-item" id="item-mod-date">
+                <div class="timeline-title">Metadata Modification Time</div>
+                <div class="timeline-date" id="date-mod">-</div>
+                <div class="timeline-note">Post-capture modification or editor export timestamp.</div>
+              </div>
+
+              <div class="timeline-item" id="item-fs-date">
+                <div class="timeline-title">Filesystem Modification Time</div>
+                <div class="timeline-date" id="date-fs">-</div>
+                <div class="timeline-note">Operating system file system write time.</div>
+              </div>
+            </div>
+
+            <div class="anomalies-box" id="anomalies-box" style="display: none;">
+              <div style="font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px;">
+                Forensic Anomalies & Warnings
+              </div>
+              <div id="anomalies-list"></div>
+            </div>
+          </div>
+
+          <!-- Metadata Explorer -->
+          <div class="panel">
+            <div class="panel-header">
+              <div class="panel-title">Extracted Metadata Registry</div>
+              <span class="tag-badge" id="tag-count-badge">0 TAGS</span>
+            </div>
+
+            <div class="metadata-controls">
+              <div class="search-input-wrapper">
+                <input type="text" class="search-input" id="search-box" placeholder="Filter metadata keys or values (e.g. ISO, software, date)...">
+              </div>
+
+              <div class="tab-buttons">
+                <button class="meta-tab-btn active" data-tab="all">ALL</button>
+                <button class="meta-tab-btn" data-tab="exif">EXIF</button>
+                <button class="meta-tab-btn" data-tab="xmp">XMP</button>
+                <button class="meta-tab-btn" data-tab="tech">SPECS</button>
+              </div>
+            </div>
+
+            <div class="metadata-table-container">
+              <table class="meta-table">
+                <thead>
+                  <tr>
+                    <th class="meta-key-col">Attribute / Tag</th>
+                    <th class="meta-val-col">Decoded Forensic Value</th>
+                  </tr>
+                </thead>
+                <tbody id="metadata-table-body">
+                </tbody>
+              </table>
+            </div>
+
+          </div>
+
+          <!-- Action Strip -->
+          <div class="action-strip">
+            <button class="btn" id="btn-export-json">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7 10 12 15 17 10"></polyline>
+                <line x1="12" y1="15" x2="12" y2="3"></line>
+              </svg>
+              Export JSON
+            </button>
+
+            <button class="btn" id="btn-export-markdown">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+              </svg>
+              Export Markdown Report
+            </button>
+
+            <button class="btn btn-primary" id="btn-scan-another">
+              Scan Another File
+            </button>
+          </div>
+
+        </section>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container">
+      META // X — Forensic Metadata & Tamper Intelligence Suite
+    </div>
+  </footer>
+
+  <script src="/app.js"></script>
+</body>
+</html>
+
