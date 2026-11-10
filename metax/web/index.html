@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>METAX — Minimalist Forensic Metadata Analyzer</title>
   <link rel="stylesheet" href="/style.css">
 </head>
+
 <body>
 
   <!-- Top Header -->
@@ -13,7 +15,7 @@
     <div class="container header-content">
       <a href="/" class="brand">
         <div class="brand-symbol">MX</div>
-        <div class="brand-text">META // X</div>
+        <div class="brand-text">METAX</div>
         <span class="brand-version">v0.2.0</span>
       </a>
 
@@ -28,13 +30,14 @@
 
   <!-- Main Workspace -->
   <main class="container">
-    
+
     <!-- Hero / Headline -->
     <section class="hero-section">
       <div class="hero-subtitle">Digital Forensics & Metadata Analysis</div>
       <h1 class="hero-title">Forensic Artifact Extraction</h1>
       <p style="color: var(--text-muted); font-size: 13px; max-width: 580px; margin: 0 auto;">
-        Inspect camera hardware signatures, geolocation, generative AI footprints, and temporal anomalies with a surgical monochrome interface.
+        Inspect camera hardware signatures, geolocation, generative AI footprints, and temporal anomalies with a
+        surgical monochrome interface.
       </p>
 
       <!-- Quick Samples -->
@@ -51,7 +54,8 @@
       <div class="dropzone-card" id="dropzone">
         <input type="file" id="file-input" accept="image/*,.pdf,audio/*,video/*">
         <div class="dropzone-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+            stroke-linecap="round" stroke-linejoin="round">
             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
             <polyline points="17 8 12 3 7 8"></polyline>
             <line x1="12" y1="3" x2="12" y2="15"></line>
@@ -229,7 +233,8 @@
             </div>
 
             <div class="anomalies-box" id="anomalies-box" style="display: none;">
-              <div style="font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px;">
+              <div
+                style="font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px;">
                 Forensic Anomalies & Warnings
               </div>
               <div id="anomalies-list"></div>
@@ -245,7 +250,8 @@
 
             <div class="metadata-controls">
               <div class="search-input-wrapper">
-                <input type="text" class="search-input" id="search-box" placeholder="Filter metadata keys or values (e.g. ISO, software, date)...">
+                <input type="text" class="search-input" id="search-box"
+                  placeholder="Filter metadata keys or values (e.g. ISO, software, date)...">
               </div>
 
               <div class="tab-buttons">
@@ -311,5 +317,5 @@
 
   <script src="/app.js"></script>
 </body>
-</html>
 
+</html>
